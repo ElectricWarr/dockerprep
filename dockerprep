@@ -1,0 +1,57 @@
+#! /usr/bin/env bash
+
+# Used Tokens:
+#  !@~DOCKERPREP_CMD~@!
+#  !@~SOURCE_IMAGE~@!
+
+usage='''
+Usage: dockerprep SOURCE_IMAGE[:TAG] REPO TAG NAME
+'''
+
+if [[ $# -eq 4 ]]; then
+  source_image="$1"
+  repo="$2"
+  tag="$3"
+  name="$4"
+  dockerprep_cmd="dockerprep $@"
+else
+  echo "$usage"
+  exit 1
+fi
+
+templates_dir="$(dirname "$(realpath "$0")")/templates" # Resolves links
+
+# -------
+# Project
+# -------
+
+# Check for existing dockerprep project
+if [ -f .dockerprep.cfg ]; then
+  echo 'Warning: .dockerprep.cfg file found - please delete this file to run Dockerprep from scratch'
+  exit 1
+fi
+
+cat << EOF > project.cfg
+repo="$repo"
+tag="$tag"
+name="$name"
+EOF
+
+# Dockerprep Config
+cat "$templates_dir/.dockerprep.cfg" | sed -E "s/!@~DOCKERPREP_CMD~@!/${dockerprep_cmd//\//\\/}/g" > .dockerprep.cfg || exit $?
+
+# -----------------
+# Dockerfile
+# -----------------
+# Read the existing Dockerfile template into memory, replace tokens, write out
+cat "$templates_dir/Dockerfile" | sed -E "s/!@~SOURCE_IMAGE~@!/${source_image//\//\\/}/g" > Dockerfile || exit $?
+
+# --------------
+# Scripts
+# --------------
+for script in "$templates_dir"/*.sh; do
+  cp "$script" . || exit $?
+  if [ "$script" != "$templates_dir/build.sh" ]; then
+    cat "$templates_dir"/cheat_sheet >> "$(basename "$script")" || exit $?
+  fi
+done
