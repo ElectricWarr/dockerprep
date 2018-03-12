@@ -1,0 +1,2 @@
+- `git` integration, call `git init` under some conditions
+- If using `git`, create `project.cfg.template` and auto-add `project.cfg` to `.gitignore` along with `.dockerprep.cfg`
