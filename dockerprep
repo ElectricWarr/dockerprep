@@ -5,7 +5,7 @@
 #  !@~SOURCE_IMAGE~@!
 
 usage='''
-Usage: dockerprep SOURCE_IMAGE[:TAG] REPO TAG NAME
+Usage: dockerprep SOURCE_IMAGE[:TAG] REPO TAG [NAME]
 '''
 
 if [[ $# -eq 4 ]]; then
@@ -13,6 +13,13 @@ if [[ $# -eq 4 ]]; then
   repo="$2"
   tag="$3"
   name="$4"
+  dockerprep_cmd="dockerprep $@"
+elif [[ $# -eq 3 ]]; then
+  # NAME <- REPO
+  source_image="$1"
+  repo="$2"
+  tag="$3"
+  name="$2"
   dockerprep_cmd="dockerprep $@"
 else
   echo "$usage"
