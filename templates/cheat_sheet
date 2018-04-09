@@ -9,4 +9,4 @@
 #
 # NB:
 #  - Volume will create DEST_PATH if it doesn't already exist
-#  - Mount and Volume require absolute paths
+#  - Mount and Volume require absolute paths, and cannot deal with symlinks
