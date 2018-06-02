@@ -1,3 +1,6 @@
 - `git` integration, call `git init` under some conditions
 - If using `git`, create `project.cfg.template` and auto-add `project.cfg` to `.gitignore` along with `.dockerprep.cfg`
 - `debug_shell` variable in `project.cfg` for debug.sh`
+- Change `project.cfg` to `docker-project.cfg`
+- Stick the `dockerprep` version number in `.dockerprep.cfg`
+- OR use `.dockerprep.cfg` for all docker-related config

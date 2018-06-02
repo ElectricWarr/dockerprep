@@ -1,3 +1,5 @@
+#!/bin/bash
+
 . project.cfg
 
 debug_name="debug-$name"
