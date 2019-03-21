@@ -2,5 +2,7 @@
 
 . project.cfg
 
-docker build --tag "$repo:latest" . && \
-docker tag "$repo:latest" "$repo:$tag"
+docker build \
+  --tag="$repo:latest" \
+  --tag="$repo:$tag" \
+  .
