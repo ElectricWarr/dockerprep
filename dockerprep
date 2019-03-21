@@ -1,13 +1,35 @@
 #! /usr/bin/env bash
 
-# Used Tokens:
-#  !@~DOCKERPREP_CMD~@!
-#  !@~SOURCE_IMAGE~@!
+dockerprep_ver='0.1'
 
-usage='''
+# Used Tokens:
+#  !@~DOCKERPREP_CMD~@!   Original Dockerprep command used to bootstrap a project
+#  !@~DOCKERPREP_VER~@!   Current Dockerprep version
+#  !@~SOURCE_IMAGE~@!     "SOURCE_IMAGE" argument
+
+usage_short='''
 Usage: dockerprep SOURCE_IMAGE[:TAG] REPO TAG [NAME]
 '''
 
+usage_long="$usage_short"'''
+Arguments:
+  SOURCE_IMAGE    Full name of a Docker repo to base project on
+  :TAG            Optional (but highly recommended!) tag of SOURCE_IMAGE
+  REPO            Repo/Image name (eg. electricwarr/dockerprep) for new project
+  TAG             First version/tag of new project
+  NAME            Optionally override using "REPO" as the Container name
+'''
+
+# Help and Version outputs
+if [[ "$1" == '--help' ]]; then
+  echo "$usage_long"
+  exit 0
+elif [[ "$1" == '--version' ]]; then
+  echo "$dockerprep_ver"
+  exit 0
+fi
+
+# Process parameters
 if [[ $# -eq 4 ]]; then
   source_image="$1"
   repo="$2"
@@ -22,7 +44,7 @@ elif [[ $# -eq 3 ]]; then
   name="$2"
   dockerprep_cmd="dockerprep $@"
 else
-  echo "$usage"
+  echo "$usage_short"
   exit 1
 fi
 
@@ -43,13 +65,13 @@ repo="$repo"
 tag="$tag"
 name="$name"
 
-# NB: 
+# NB:
 #  - Command substitution can be used in variables here - try to use "\$(this format)" instead of \`backticks\` if possible
 #  - Mount/Volume paths used here MUST be absolute - use eg. "\$(realpath SYMLINK_PATH)" if you don't want to hardcode them
 EOF
 
 # Dockerprep Config
-cat "$templates_dir/.dockerprep.cfg" | sed -E "s/!@~DOCKERPREP_CMD~@!/${dockerprep_cmd//\//\\/}/g" > .dockerprep.cfg || exit $?
+cat "$templates_dir/.dockerprep.cfg" | sed -E "s/!@~DOCKERPREP_CMD~@!/${dockerprep_cmd//\//\\/}/g" | sed -E "s/!@~DOCKERPREP_VER~@!/${dockerprep_ver//\//\\/}/g" > .dockerprep.cfg || exit $?
 
 # -----------------
 # Dockerfile
