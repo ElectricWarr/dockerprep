@@ -4,4 +4,5 @@
 
 docker run --rm -d \
   --name="$name" \
-  "$repo":latest
+  "$repo":latest \
+  $@
