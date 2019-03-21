@@ -8,6 +8,16 @@ Prepares a docker project in the current directory, setting up a structure that 
 dockerprep SOURCE_IMAGE[:TAG] REPO TAG NAME
 ```
 
+## Installation
+
+```
+alias dockerprep='docker run --rm -it --volume "$(pwd -P):/project" electricwarr/dockerprep:0.9'
+```
+
+The `electricwarr/dockerprep` image will be downloaded on the first invocation.
+
+You can find the latest version on Docker Hub:
+
 ## Function
 
 When run in an empty directory, `dockerprep` will create a new docker project based on input parameters. These parameters will be saved to a config file, `project.cfg`, as well as preserved to a hidden file `.dockerprep.cfg`.

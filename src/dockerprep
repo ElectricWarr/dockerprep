@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-dockerprep_ver='0.1'
+dockerprep_ver='0.9'
 
 # Used Tokens:
 #  !@~DOCKERPREP_CMD~@!   Original Dockerprep command used to bootstrap a project
