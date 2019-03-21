@@ -19,6 +19,9 @@ When run in an empty directory, `dockerprep` will create a new docker project ba
 
 ## Future
 
+- Give the option to abort before overwriting any files
+  - `dockerprep` currently will refuse to run on finding `.dockerprep.cfg`
+  - If run in an existing project without `.dockerprep.cfg`, existing files (eg. Dockerfile) can be overwritten without warning
 - Run `git init`, `git add .` and `git commit -m 'initial commit (dockerprep)'` IFF `git` is installed and the current directory is not part of a git repository.
 
 ## Questions
