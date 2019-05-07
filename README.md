@@ -38,4 +38,4 @@ When run in an empty directory, `dockerprep` will create a new docker project ba
 
 - Should this be in Go? Python? Node.js?
 
-Thinking of rewriting in another language (probably Go) to be less dependant on shell environment.
+Thinking of rewriting in another language (probably Go) to be less dependent on shell environment.
