@@ -8,15 +8,27 @@ Prepares a docker project in the current directory, setting up a structure that 
 dockerprep SOURCE_IMAGE[:TAG] REPO TAG NAME
 ```
 
-## Installation
+## "Installation"
+
+Linux:
 
 ```
-alias dockerprep='docker run --rm -it --volume "$(pwd -P):/project" electricwarr/dockerprep:0.9'
+alias dockerprep='docker run --rm -it --user="$(id -u):$(id -g)" --volume="$(pwd -P):/project" electricwarr/dockerprep:0.9'
+```
+
+_NB: `--user` is needed here to avoid writing all files as root_
+
+MacOS:
+
+```
+alias dockerprep='docker run --rm -it --volume="$(pwd -P):/project" electricwarr/dockerprep:0.9'
 ```
 
 The `electricwarr/dockerprep` image will be downloaded on the first invocation.
 
 You can find the latest version on Docker Hub:
+
+https://hub.docker.com/u/electricwarr/
 
 ## Function
 
